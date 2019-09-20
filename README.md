@@ -1,2 +1,2 @@
-# pricez
-The PriceZ unofficial client 
+# PriceZ
+The PriceZ unofficial dotnet client 
