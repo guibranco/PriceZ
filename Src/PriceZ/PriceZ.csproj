@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>86C0F2BE-0E35-4D0E-83E0-D73090D3134D</ProjectGuid>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<Authors>Guilherme Branco Stracini</Authors>
+    <Description>The PriceZ unnofficial dotnet client</Description>
+    <Copyright>© 2019 Guilherme Branco Stracini. All rights reserved.</Copyright>
+    <PackageLicense>https://github.com/guibranco/PriceZ/blob/master/LICENSE</PackageLicense>
+    <PackageProjectUrl>https://github.com/guibranco/PriceZ/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/guibranco/PriceZ</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageTags>client sdk pricez ddd phone extension postalcode postal code zip zipcode state city cities states api</PackageTags>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utils\" />
+  </ItemGroup>
+</Project>
