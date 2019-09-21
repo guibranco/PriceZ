@@ -14,6 +14,8 @@ The PriceZ unofficial dotnet client
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=guibranco_PriceZ&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=guibranco_PriceZ)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=guibranco_PriceZ&metric=security_rating)](https://sonarcloud.io/dashboard?id=guibranco_PriceZ)
 
+[![PriceZ Logo](https://raw.githubusercontent.com/guibranco/PriceZ/master/logo.png)](https://ddd.pricez.com.br)
+
 ---
 
 NuGet package: https://www.nuget.org/packages/PriceZ
