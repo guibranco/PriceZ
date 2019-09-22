@@ -29,10 +29,19 @@ build:
   verbosity: normal
 build_script:
  - dotnet tool install --global dotnet-sonarscanner
- - dotnet sonarscanner begin /k:"guibranco_PriceZ" /o:"guibranco-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="%SONAR_TOKEN%" /v:"%APPVEYOR_BUILD_NUMBER%" /d:sonar.exclusions="**/bin/**/*,**/obj/**/*" /d:sonar.coverage.exclusions="Tests/PriceZ.Tests/**,**/*Tests.cs" /d:sonar.cs.opencover.reportsPaths="%CD%\Tests\PriceZ.Tests\coverage.opencover.xml"
+ - ps: 'if (-Not $env:APPVEYOR_PULL_REQUEST_NUMBER) { & 
+  dotnet sonarscanner begin 
+ /k:"guibranco_PriceZ" 
+ /o:"guibranco-github" 
+ /d:sonar.host.url="https://sonarcloud.io" 
+ /d:sonar.login="$env:SONAR_TOKEN" 
+ /v:"$env:APPVEYOR_BUILD_NUMBER" 
+ /d:sonar.exclusions="**/bin/**/*,**/obj/**/*" 
+ /d:sonar.coverage.exclusions="PriceZ.Tests/**,**/*Tests.cs" 
+ /d:sonar.cs.opencover.reportsPaths="$env:CD\Tests\PriceZ.Tests\coverage.opencover.xml" }'
  - dotnet build
  - ps: dotnet test .\Tests\PriceZ.Tests\PriceZ.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat="opencover"
- - dotnet sonarscanner end /d:sonar.login="%SONAR_TOKEN%"
+ - ps: 'if (-Not $env:APPVEYOR_PULL_REQUEST_NUMBER) { & dotnet sonarscanner end /d:sonar.login="$env:SONAR_TOKEN" }'
  - codecov -f "Tests\PriceZ.Tests\coverage.opencover.xml"
 after_build:
 - xcopy %CD%\Src\PriceZ\bin\Release\netstandard2.0\*.* %CD%\Build\
