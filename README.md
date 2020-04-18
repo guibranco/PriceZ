@@ -65,3 +65,8 @@ var zipCode = priceZ.GetZipcode("01001000");
 Console.WriteLine("DDD: {0}", zipCode.AreaCode);
 
 ```
+
+
+## TODO
+
+Add async capabilities.
