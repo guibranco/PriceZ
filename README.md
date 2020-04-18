@@ -1,6 +1,6 @@
 # PriceZ
 
-The PriceZ unofficial .NET client.
+The PriceZ .NET client wrapper.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/qkewynp2qh7t8xf2?svg=true)](https://ci.appveyor.com/project/guibranco/pricez)
 [![PriceZ NuGet Version](https://img.shields.io/nuget/v/PriceZ.svg?style=flat)](https://www.nuget.org/packages/PriceZ/)
