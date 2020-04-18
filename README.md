@@ -1,5 +1,6 @@
 # PriceZ
-The PriceZ unofficial dotnet client 
+
+The PriceZ unofficial .NET client.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/qkewynp2qh7t8xf2?svg=true)](https://ci.appveyor.com/project/guibranco/pricez)
 [![PriceZ NuGet Version](https://img.shields.io/nuget/v/PriceZ.svg?style=flat)](https://www.nuget.org/packages/PriceZ/)
@@ -18,10 +19,12 @@ The PriceZ unofficial dotnet client
 
 ---
 
-NuGet package: https://www.nuget.org/packages/PriceZ
+NuGet package: [https://www.nuget.org/packages/PriceZ](https://www.nuget.org/packages/PriceZ)
 
 ```ps
+
 Install-Package PriceZ
+
 ```
 
 ---
