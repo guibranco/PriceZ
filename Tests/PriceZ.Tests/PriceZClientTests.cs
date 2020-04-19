@@ -69,7 +69,7 @@ namespace PriceZ.Tests
             Assert.Equal("SP", zipCode.StateInitials);
             Assert.Equal("Praça da Sé", zipCode.Address);
             Assert.Equal(11, zipCode.AreaCode);
-            Assert.Equal((decimal)1521.11, zipCode.CityInfo.Area);
+            Assert.Equal(152111, zipCode.CityInfo.Area);
             Assert.Equal("1521.11", zipCode.CityInfo.AreaInternal);
             Assert.Equal(3550308, zipCode.CityInfo.IBGECode);
             Assert.Null(zipCode.CityInfo.Name);
