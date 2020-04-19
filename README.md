@@ -52,19 +52,18 @@ Install-Package PriceZ
 
 ## Features
 
-Implements all features of Project name API available at [Project name](https://project.name.com/)
+Implements all features of PriceZ API available at [PriceZ](https://ddd.pricez.com.br/)
 
 - Get area codes
-- Get cities from an area code
 - Get states
-- Get cities from a state
+- Get cities from a state or area code
 - Get zipcode data
 
 ---
 
 ## Usage
 
-### PriceZClient instantiation
+### PriceZClient instance
 
 ```cs
 
@@ -76,7 +75,7 @@ var priceZClient = new PriceZClient(client);
 
 ```
 
-### Get area code list
+### Get area code
 
 ```cs
 
