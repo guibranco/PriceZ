@@ -8,7 +8,7 @@
     /// <summary>
     /// The PriceZ client interface
     /// </summary>
-    internal interface IPriceZClient
+    public interface IPriceZClient
     {
         /// <summary>
         /// Gets the area codes asynchronous.
