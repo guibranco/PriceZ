@@ -17,7 +17,10 @@
             get => Area.ToString(CultureInfo.InvariantCulture);
             set
             {
-                if (decimal.TryParse(value, out var v))
+                if (decimal.TryParse(value,
+                                     NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands,
+                                     new CultureInfo("pt-BR"),
+                                     out var v))
                     Area = v;
             }
         }
