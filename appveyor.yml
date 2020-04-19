@@ -1,59 +1,87 @@
 version: 1.0.{build}
-pull_requests:
- do_not_increment_build_number: true
 skip_tags: true
-image: Visual Studio 2017
+image: Visual Studio 2019
 configuration: Release
 skip_commits:
-  message: /(Created|Update).*\.(png|jpg|jpeg|bmp|gif|md)/
-skip_branch_with_pr: true
+  message: /(Create|Update) .*\.(png|jpg|jpeg|bmp|gif|md)/
+
 environment:
   SONAR_TOKEN: 
-    secure: /a1k6MVBObLOM5paiNyCBAVgYtfX8cj+e3+FTFiu74tJWbEZbh2jAj5V0e6P4BVI
+    secure: qd6xb/TEKfQMLWobnkqCSTPyMxPF8T9/pvCQBDLWWKzUz+xmv7M6c8TK/IOjPzSW
+  GITHUB_TOKEN:
+    secure: VgYYJdvNLy/n9/uxxlaF0bMpIIrVxCb+dGr66U9nWfPWSN2ySdfuilO8klAw0uvF
+  CODACY_PROJECT_TOKEN:
+    secure: MmN0qt/0IxsI35wytvusP//W+wrZg8TdAEQK5ENH2Md8rVHgcR8kK1OCNw1TFyP1
+
 dotnet_csproj: 
   patch: true 
   file: '**\*.csproj' 
-  version: '1.0.{build}' 
-  package_version: '1.0.{build}' 
-  assembly_version: '1.0.{build}'
-  file_version: '1.0.{build}'
-  informational_version: '1.0.{build}'
+  version: '{version}' 
+  package_version: '{version}' 
+  assembly_version: '{version}' 
+  file_version: '{version}' 
+  informational_version: '{version}' 
+
 before_build:
+- ps: $env:SOLUTION_NAME = "$env:APPVEYOR_REPO_NAME" -replace ".*/","" -replace "-SDK-dotnet","" -replace "-dotnet",""
+- ps: $env:SONAR_PROJECT = "$env:APPVEYOR_REPO_NAME" -replace "/","_"
+- ps: $env:SONAR_ORGANIZATION = "$env:APPVEYOR_REPO_NAME" -replace "/.*$","-github"
 - cmd: nuget restore
 - cmd: choco install opencover.portable
 - cmd: choco install codecov
+- cmd: curl -L https://github.com/codacy/codacy-coverage-reporter/releases/download/7.7.0/codacy-coverage-reporter-assembly-7.7.0.jar > ./codacy-test-reporter.jar
+- cmd: dotnet tool install --global dotnet-sonarscanner
+
 build:
   publish_nuget: true
   include_nuget_references: true
   parallel: true
   verbosity: normal
+
 build_script:
- - dotnet tool install --global dotnet-sonarscanner
- - ps: 'if (-Not $env:APPVEYOR_PULL_REQUEST_NUMBER) { & 
+- ps: 'if (-Not $env:APPVEYOR_PULL_REQUEST_NUMBER -And $env:APPVEYOR_REPO_BRANCH -eq "master") { & 
   dotnet sonarscanner begin 
- /k:"guibranco_PriceZ" 
- /o:"guibranco-github" 
+ /k:"$env:SONAR_PROJECT" 
+ /o:"$env:SONAR_ORGANIZATION" 
  /d:sonar.host.url="https://sonarcloud.io" 
  /d:sonar.login="$env:SONAR_TOKEN" 
  /v:"$env:APPVEYOR_BUILD_NUMBER" 
  /d:sonar.exclusions="**/bin/**/*,**/obj/**/*" 
- /d:sonar.coverage.exclusions="PriceZ.Tests/**,**/*Tests.cs" 
- /d:sonar.cs.opencover.reportsPaths="$env:CD\Tests\PriceZ.Tests\coverage.opencover.xml" }'
- - dotnet build
- - ps: dotnet test .\Tests\PriceZ.Tests\PriceZ.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat="opencover"
- - ps: 'if (-Not $env:APPVEYOR_PULL_REQUEST_NUMBER) { & dotnet sonarscanner end /d:sonar.login="$env:SONAR_TOKEN" }'
- - codecov -f "Tests\PriceZ.Tests\coverage.opencover.xml"
+ /d:sonar.coverage.exclusions="**/$env:SOLUTION_NAME.Tests/**,**/*Tests.cs" 
+ /d:sonar.cs.opencover.reportsPaths="$env:CD\Tests\$env:SOLUTION_NAME.Tests\coverage.opencover.xml" }'
+- dotnet build %SOLUTION_NAME%.sln
+- dotnet test .\Tests\%SOLUTION_NAME%.Tests\%SOLUTION_NAME%.Tests.csproj 
+ /p:CollectCoverage=true 
+ /p:CoverletOutputFormat="opencover"
+- codecov -f "%CD%\Tests\%SOLUTION_NAME%.Tests\coverage.opencover.xml"
+- java 
+ -jar 
+ ./codacy-test-reporter.jar report 
+ -l CSharp 
+ -t %CODACY_PROJECT_TOKEN% 
+ -r "%CD%\Tests\%SOLUTION_NAME%.Tests\coverage.opencover.xml"
+- ps: 'if (-Not $env:APPVEYOR_PULL_REQUEST_NUMBER -And $env:APPVEYOR_REPO_BRANCH -eq "master") { & 
+ dotnet sonarscanner end 
+ /d:sonar.login="$env:SONAR_TOKEN" }'
+
 after_build:
-- xcopy %CD%\Src\PriceZ\bin\Release\netstandard2.0\*.* %CD%\Build\
-- copy %CD%\Src\PriceZ\bin\Release\PriceZ.1.0.%APPVEYOR_BUILD_NUMBER%.nupkg PriceZ.%APPVEYOR_BUILD_VERSION%.nupkg
-- rd /s /q %CD%\Src\PriceZ\bin\Release\
+- xcopy %CD%\Src\%SOLUTION_NAME%\bin\Release\netstandard2.0\*.* %CD%\Build\
+- copy %CD%\Src\%SOLUTION_NAME%\bin\Release\%SOLUTION_NAME%.%APPVEYOR_BUILD_VERSION%.nupkg %SOLUTION_NAME%.%APPVEYOR_BUILD_VERSION%.nupkg
+- rd /s /q %CD%\Src\%SOLUTION_NAME%\bin\Release\
+- xcopy %CD%\Tests\%SOLUTION_NAME%.Tests\*.xml %CD%\Coverage\
+- xcopy %CD%\Tests\%SOLUTION_NAME%.Tests\*.json %CD%\Coverage\
 - cd %CD%
-- 7z a -tzip -mx9 "PriceZ.%APPVEYOR_BUILD_VERSION%.zip" Build
+- 7z a -tzip -mx9 "%SOLUTION_NAME%.%APPVEYOR_BUILD_VERSION%.zip" Build
+- 7z a -tzip -mx9 "%SOLUTION_NAME%.%APPVEYOR_BUILD_VERSION%.Coverage.zip" Coverage
+
 artifacts:
-- path: PriceZ.%APPVEYOR_BUILD_VERSION%.zip
+- path: $(SOLUTION_NAME).%APPVEYOR_BUILD_VERSION%.zip
   name: ZipFile
-- path: PriceZ.%APPVEYOR_BUILD_VERSION%.nupkg
+- path: $(SOLUTION_NAME).%APPVEYOR_BUILD_VERSION%.nupkg
   name: Package
+- path: $(SOLUTION_NAME).%APPVEYOR_BUILD_VERSION%.Coverage.zip
+  name: Coverage
+
 deploy:
 - provider: Environment
   name: NuGet
@@ -64,7 +92,6 @@ deploy:
   on:
    branch: master
   tag: $(appveyor_build_version)
-  auth_token:
-    secure: VgYYJdvNLy/n9/uxxlaF0bMpIIrVxCb+dGr66U9nWfPWSN2ySdfuilO8klAw0uvF
+  auth_token: $(GITHUB_TOKEN)
   force_update: true
   artifact: ZipFile
