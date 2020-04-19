@@ -11,8 +11,8 @@ The [PriceZ](https://ddd.pricez.com.br) .NET client wrapper.
 
 ## Code Quality
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/34f017f7b2714ae481f3d27b8c38e236)](https://www.codacy.com/manual/changeme/34f017f7b2714ae481f3d27b8c38e236)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/34f017f7b2714ae481f3d27b8c38e236)](https://www.codacy.com/manual/changeme/34f017f7b2714ae481f3d27b8c38e236)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/34f017f7b2714ae481f3d27b8c38e236)](https://www.codacy.com/manual/guibranco/34f017f7b2714ae481f3d27b8c38e236)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/34f017f7b2714ae481f3d27b8c38e236)](https://www.codacy.com/manual/guibranco/34f017f7b2714ae481f3d27b8c38e236)
 [![Codecov](https://codecov.io/gh/guibranco/PriceZ/branch/master/graph/badge.svg)](https://codecov.io/gh/guibranco/PriceZ)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=guibranco_PriceZ&metric=alert_status)](https://sonarcloud.io/dashboard?id=guibranco_PriceZ)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=guibranco_PriceZ&metric=coverage)](https://sonarcloud.io/dashboard?id=guibranco_PriceZ)
