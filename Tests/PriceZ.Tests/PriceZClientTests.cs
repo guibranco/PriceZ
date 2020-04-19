@@ -31,22 +31,22 @@ namespace PriceZ.Tests
         }
 
         [Fact]
-        public async Task ValidateGetCitiesByAreaCode()
-        {
-            var cities = await _priceZ.GetCitiesAsync(11, CancellationToken.None);
-            var citiesList = cities.ToList();
-            Assert.Contains(citiesList, city => city.AreaCode.Equals(11));
-            Assert.Contains(citiesList, city => city.City.Equals("São Paulo"));
-            Assert.Contains(citiesList, city => city.StateInitials.Equals("SP"));
-        }
-
-        [Fact]
         public async Task ValidateGetStates()
         {
             var states = await _priceZ.GetStatesAsync(CancellationToken.None);
             var statesList = states.ToList();
             Assert.Contains("SP", statesList);
             Assert.Contains("RJ", statesList);
+        }
+        
+        [Fact]
+        public async Task ValidateGetCitiesByAreaCode()
+        {
+            var cities = await _priceZ.GetCitiesAsync(11, CancellationToken.None);
+            var citiesList = cities.ToList();
+            Assert.Contains(citiesList, city => city.AreaCode.Equals(11));
+            Assert.Contains(citiesList, city => city.City.Equals("SÃ£o Paulo"));
+            Assert.Contains(citiesList, city => city.StateInitials.Equals("SP"));
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace PriceZ.Tests
             var cities = await _priceZ.GetCitiesAsync("SP", CancellationToken.None);
             var citiesList = cities.ToList();
             Assert.Contains(citiesList, city => city.AreaCode.Equals(11));
-            Assert.Contains(citiesList, city => city.City.Equals("São Paulo"));
+            Assert.Contains(citiesList, city => city.City.Equals("SÃ£o Paulo"));
             Assert.Contains(citiesList, city => city.StateInitials.Equals("SP"));
         }
 
@@ -63,11 +63,11 @@ namespace PriceZ.Tests
         public async Task GetZipCode()
         {
             var zipCode = await _priceZ.GetZipCodeAsync("01001000", CancellationToken.None);
-            Assert.Equal("Sé", zipCode.Neighborhood);
+            Assert.Equal("SÃ©", zipCode.Neighborhood);
             Assert.Equal("01001000", zipCode.ZipCode);
-            Assert.Equal("São Paulo", zipCode.City);
+            Assert.Equal("SÃ£o Paulo", zipCode.City);
             Assert.Equal("SP", zipCode.StateInitials);
-            Assert.Equal("Praça da Sé", zipCode.Address);
+            Assert.Equal("PraÃ§a da SÃ©", zipCode.Address);
             Assert.Equal(11, zipCode.AreaCode);
             Assert.Equal((decimal)1521.11, zipCode.CityInfo.Area);
             Assert.Equal("1521.11", zipCode.CityInfo.AreaInternal);
