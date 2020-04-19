@@ -16,7 +16,14 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
         Task<IEnumerable<int>> GetAreaCodesAsync(CancellationToken cancellationToken);
-
+       
+        /// <summary>
+        /// Gets the states asynchronous.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        Task<IEnumerable<string>> GetStatesAsync(CancellationToken cancellationToken);
+        
         /// <summary>
         /// Gets the cities asynchronous.
         /// </summary>
@@ -24,13 +31,6 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
         Task<IEnumerable<CityData>> GetCitiesAsync(int areaCode, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Gets the states asynchronous.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-        Task<IEnumerable<string>> GetStatesAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets the cities asynchronous.
