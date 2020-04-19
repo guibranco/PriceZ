@@ -38,6 +38,18 @@
         }
 
         /// <summary>
+        /// Gets the states.
+        /// </summary> 
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<string>> GetStatesAsync(CancellationToken cancellationToken)
+        {
+            var response = await _httpClient.GetAsync("estados", cancellationToken);
+            var result = await response.Content.ReadAsAsync<Response<string[]>>(cancellationToken);
+            return result.Payload;
+        }
+        
+        /// <summary>
         /// Gets the cities asynchronous.
         /// </summary>
         /// <param name="areaCode">The area code.</param>
@@ -47,18 +59,6 @@
         {
             var response = await _httpClient.GetAsync($"ddds/{areaCode}", cancellationToken);
             var result = await response.Content.ReadAsAsync<Response<CityData[]>>(cancellationToken);
-            return result.Payload;
-        }
-
-        /// <summary>
-        /// Gets the states.
-        /// </summary> 
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-        public async Task<IEnumerable<string>> GetStatesAsync(CancellationToken cancellationToken)
-        {
-            var response = await _httpClient.GetAsync("estados", cancellationToken);
-            var result = await response.Content.ReadAsAsync<Response<string[]>>(cancellationToken);
             return result.Payload;
         }
 
