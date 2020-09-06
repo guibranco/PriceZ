@@ -1,6 +1,6 @@
 # PriceZ [DEPRECATED]
 
-2020-09: PriceZ is offline and so this package is deprecated!
+2020-09-06: **PriceZ is offline and so this package is deprecated!**
 
 ---
 
