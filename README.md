@@ -1,4 +1,4 @@
-# PriceZ [DEPRECATED}
+# PriceZ [DEPRECATED]
 
 As 2020-09, PriceZ is offline and so this package is deprecated!
 
